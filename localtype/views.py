@@ -21,6 +21,7 @@ try:
     tfidf_vectorizer = dill.load(open(base_dir+'tfidf_vectorizer.m', 'rb'))
     c = dill.load(open(base_dir+"trained_pipeline.m", 'rb'))
 except:
+    print('first import failed, trying secondary import')
     base_dir = '/Users/nknezek/Documents/'
     tfidf_vectorizer = dill.load(open(base_dir + 'Insight_local/project/3city_test/tfidf_vectorizer.m', 'rb'))
     c = dill.load(open(base_dir + "Insight_local/project/3city_test/trained_pipeline.m", 'rb'))
