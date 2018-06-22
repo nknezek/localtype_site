@@ -17,9 +17,9 @@ import localtype.lime_custom_output as lmc
 tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
 stemmer = SnowballStemmer('english')
 try:
-    base_dir = '/home/ubuntu/'
-    tfidf_vectorizer = dill.load(open(base_dir+'Insight_local/project/3city_test/tfidf_vectorizer.m', 'rb'))
-    c = dill.load(open(base_dir+"Insight_local/project/3city_test/trained_pipeline.m", 'rb'))
+    base_dir = '/home/ubuntu/localtype_site/localtype/data/'
+    tfidf_vectorizer = dill.load(open(base_dir+'tfidf_vectorizer.m', 'rb'))
+    c = dill.load(open(base_dir+"trained_pipeline.m", 'rb'))
 except:
     base_dir = '/Users/nknezek/Documents/'
     tfidf_vectorizer = dill.load(open(base_dir + 'Insight_local/project/3city_test/tfidf_vectorizer.m', 'rb'))
