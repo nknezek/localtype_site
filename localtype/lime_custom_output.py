@@ -30,9 +30,10 @@ def colored_score(exp, cityid):
 
 
 def plot_top_words(exp, N=6):
-    Nplt = min(len(exp.as_list()),N)
-    names = [x[0] for x in exp.as_list()][:Nplt]
-    scores = [x[1] for x in exp.as_list()][:Nplt]
+    (_,namescores),= exp.as_map().items()
+    Nplt = min(len(namescores),N)
+    names = [x[0] for x in namescores][:Nplt]
+    scores = [x[1] for x in namescores][:Nplt]
     y = range(Nplt,0,-1)
 
     fig, ax = plt.subplots(figsize=(2.5,4))
@@ -116,10 +117,10 @@ def color_words(exp):
 
 
 def list_cities(exp,cityid,N=6,):
-    cn = exp.class_names
-    p = exp.predict_proba
-    Nplt = min(N,len(cn))
-    cns = [x[1] for x in sorted(zip(p,cn), reverse=True)]
+    cnames = list(exp.class_names)
+    p = list(exp.predict_proba)
+    Nplt = min(N,len(cnames))
+    cns = [x[1] for x in sorted(zip(p,cnames), reverse=True)]
     ps = sorted(p, reverse=True)
     all_inds = np.argsort(p)[::-1]
     inds = all_inds[:Nplt]
