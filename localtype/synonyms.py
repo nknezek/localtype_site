@@ -1,5 +1,10 @@
 from nltk.corpus import wordnet as wn
 import localtype.thesaurus as th
+from nltk.stem.snowball import SnowballStemmer
+from nltk.tokenize import RegexpTokenizer
+
+tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
+stemmer = SnowballStemmer('english')
 
 def suggest_synonyms(c, tokenizer, text, cityid, N=6):
     syndict = {}
