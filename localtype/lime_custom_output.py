@@ -3,6 +3,13 @@ import numpy as np
 from io import BytesIO
 import base64
 
+from nltk.stem.snowball import SnowballStemmer
+from nltk.tokenize import RegexpTokenizer
+from lime.lime_text import LimeTextExplainer
+
+tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
+stemmer = SnowballStemmer('english')
+
 
 def colored_score(exp, cityid):
     low = 30

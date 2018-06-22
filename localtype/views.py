@@ -7,8 +7,8 @@ from nltk.tokenize import RegexpTokenizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
-
 from lime.lime_text import LimeTextExplainer
+
 import dill
 
 import localtype.synonyms as syn
