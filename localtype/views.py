@@ -2,8 +2,6 @@ from flask import render_template
 from localtype import app
 from flask import request
 
-from nltk.stem.snowball import SnowballStemmer
-from nltk.tokenize import RegexpTokenizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
@@ -14,8 +12,15 @@ import dill
 import localtype.synonyms as syn
 import localtype.lime_custom_output as lmc
 
+from nltk.stem.snowball import SnowballStemmer
+from nltk.tokenize import RegexpTokenizer
 tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
 stemmer = SnowballStemmer('english')
+def tokenize(text):
+    tokens = tokenizer.tokenize(text.lower())
+    stems = [stemmer.stem(x) for x in tokens]
+    return stems
+
 try:
     base_dir = '/home/ubuntu/localtype_site/localtype/data/'
     tfidf_vectorizer = dill.load(open(base_dir+'tfidf_vectorizer.m', 'rb'))

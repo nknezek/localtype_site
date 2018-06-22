@@ -4,9 +4,13 @@ from io import BytesIO
 
 from nltk.stem.snowball import SnowballStemmer
 from nltk.tokenize import RegexpTokenizer
-
 tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
 stemmer = SnowballStemmer('english')
+def tokenize(text):
+    tokens = tokenizer.tokenize(text.lower())
+    stems = [stemmer.stem(x) for x in tokens]
+    return stems
+
 
 
 def colored_score(exp, cityid):
