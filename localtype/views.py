@@ -16,8 +16,14 @@ import localtype.lime_custom_output as lmc
 
 tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
 stemmer = SnowballStemmer('english')
-tfidf_vectorizer = dill.load(open('/Users/nknezek/Documents/Insight_local/project/3city_test/tfidf_vectorizer.m', 'rb'))
-c = dill.load(open("/Users/nknezek/Documents/Insight_local/project/3city_test/trained_pipeline.m", 'rb'))
+try:
+    base_dir = '/home/ubuntu/'
+    tfidf_vectorizer = dill.load(open(base_dir+'Insight_local/project/3city_test/tfidf_vectorizer.m', 'rb'))
+    c = dill.load(open(base_dir+"Insight_local/project/3city_test/trained_pipeline.m", 'rb'))
+except:
+    base_dir = '/Users/nknezek/Documents/'
+    tfidf_vectorizer = dill.load(open(base_dir + 'Insight_local/project/3city_test/tfidf_vectorizer.m', 'rb'))
+    c = dill.load(open(base_dir + "Insight_local/project/3city_test/trained_pipeline.m", 'rb'))
 
 # Load the text-analysis model
 
