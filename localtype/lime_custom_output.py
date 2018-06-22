@@ -30,8 +30,9 @@ def colored_score(exp, cityid):
 
 
 def plot_top_words(exp, N=6):
-    (_,namescores),= exp.as_map().items()
-    Nplt = min(len(namescores),N)
+    (_,idscores),= exp.as_map().items()
+    Nplt = min(len(idscores),N)
+    namescores = exp.domain_mapper.map_exp_ids(idscores)
     names = [x[0] for x in namescores][:Nplt]
     scores = [x[1] for x in namescores][:Nplt]
     y = range(Nplt,0,-1)
