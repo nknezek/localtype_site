@@ -23,12 +23,12 @@ def tokenize(text):
 
 try:
     base_dir = '/home/ubuntu/localtype_site/localtype/data/'
-    tfidf_vectorizer = dill.load(open(base_dir+'tfidf_vectorizer.m', 'rb'))
-    c = dill.load(open(base_dir+"trained_pipeline.m", 'rb'))
+    tfidf_vectorizer = dill.load(open(base_dir+'tfidf_vectorizer_nlpimport.m', 'rb'))
+    c = dill.load(open(base_dir+"trained_pipeline_nlpimport.m", 'rb'))
 except:
     print('first import failed, trying secondary import')
     base_dir = '/Users/nknezek/Documents/Insight_local/localtype_site/localtype/data/'
-    tfidf_vectorizer = dill.load(open(base_dir + 'tfidf_vectorizer.m', 'rb'))
+    tfidf_vectorizer = dill.load(open(base_dir + 'tfidf_vectorizer_nlpimport.m', 'rb'))
     c = dill.load(open(base_dir + "trained_pipeline_nlpimport.m", 'rb'))
 
 # Load the text-analysis model
