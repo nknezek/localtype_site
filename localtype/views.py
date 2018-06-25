@@ -63,9 +63,9 @@ def text_output():
         input_text = request.args.get('input_text')
     except:
         input_text = "you didn't enter any text! So instead you get to see this easter-egg! Aren't you lucky?"
+    exp = explainer.explain_instance(input_text, c.predict_proba, num_features=6, labels=[int(input_city)], num_samples=500)
     syndict = syn.suggest_synonyms(c,tokenizer,input_text,int(input_city))
     synhtml = syn.html_suggested_synonyms(syndict)
-    exp = explainer.explain_instance(input_text, c.predict_proba, num_features=6, labels=[int(input_city)], num_samples=500)
     color_text = lmc.color_words(exp)
     # color_text = "<p>color text</p>"
     score = lmc.colored_score(exp,int(input_city))
