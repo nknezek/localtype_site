@@ -56,6 +56,7 @@ def index():
 @app.route('/output')
 def text_output():
     # pull input text and city from input field and store it
+    tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
     input_city = request.args.get('input_city')
     dropdown_html = make_dropdown(statetowns,int(input_city))
     try:
