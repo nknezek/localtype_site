@@ -121,17 +121,15 @@ def list_cities(exp,cityid,N=6,):
     ps = sorted(p, reverse=True)
     all_inds = np.argsort(p)[::-1]
     inds = all_inds[:Nplt]
-    ryg = ['#a50026','#feffbe','#006837']
-    colors = np.array([ryg[0]]*len(cns))
-    if cityid in inds:
-        # print('in inds',inds)
-        colors[np.where(inds==cityid)] = ryg[2]
-    else:
+    if cityid not in inds:
         Nplt = Nplt - 1
     html_cities = ''
-    for i,(name,color) in enumerate(zip(cns[:Nplt],colors[:Nplt])):
-        html_cities += '<h2><span style="color:{}"> {}. {} </span></h2>'.format(color,i+1,name)
+    for i,(ind,name) in enumerate(zip(inds[:Nplt],cns[:Nplt])):
+        if ind == cityid:
+            html_cities += '<tr><th><strong> {}. {} </strong></th>'.format(i+1,name)
+        else:
+            html_cities += '<tr><th> {}. {} </th></tr>'.format(i+1,name)
     if cityid not in inds:
         rank = np.where(all_inds==cityid)[0][0]
-        html_cities += '<h2>:</h2><h2><span style="color:{}"> {}. {} </span></h2>'.format(ryg[2],rank+1,cns[cityid])
+        html_cities += '<tr><th>:</th></tr> <tr><th><strong> {}. {} </strong></th></tr>'.format(rank+1,cnames[cityid])
     return html_cities

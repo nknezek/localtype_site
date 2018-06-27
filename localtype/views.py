@@ -1,13 +1,15 @@
 from flask import render_template
 from localtype import app
 from flask import request
-
-from lime.lime_text import LimeTextExplainer
-
 import dill
-
+from lime.lime_text import LimeTextExplainer
 import localtype.synonyms as syn
 import localtype.lime_custom_output as lmc
+
+from nltk.stem.snowball import SnowballStemmer
+from nltk.tokenize import WhitespaceTokenizer
+tokenizer = WhitespaceTokenizer()
+
 
 
 try:
