@@ -51,11 +51,7 @@
             <div class="col-lg-5">
                 <div class="form-group">
                     <label for="input_city"><h2>Choose a location</h2></label><br>
-                    <select id="input_city" name="input_city">
-                        <option value="0">Anchorage, Alaska</option>
-                        <option value="1">Berkeley, California</option>
-                        <option value="2">Denton, Texas</option>
-                    </select>
+                    {{dropdown_html|safe}}
                     {% include 'usa.html' %}
                 </div>
             </div>

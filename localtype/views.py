@@ -2,9 +2,6 @@ from flask import render_template
 from localtype import app
 from flask import request
 
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.linear_model import LogisticRegression
-from sklearn.pipeline import make_pipeline
 from lime.lime_text import LimeTextExplainer
 
 import dill
@@ -12,28 +9,25 @@ import dill
 import localtype.synonyms as syn
 import localtype.lime_custom_output as lmc
 
-from nltk.stem.snowball import SnowballStemmer
-from nltk.tokenize import RegexpTokenizer
-tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
-stemmer = SnowballStemmer('english')
-def tokenize(text):
-    tokens = tokenizer.tokenize(text.lower())
-    stems = [stemmer.stem(x) for x in tokens]
-    return stems
 
 try:
     base_dir = '/home/ubuntu/localtype_site/localtype/data/'
-    tfidf_vectorizer = dill.load(open(base_dir+'tfidf_vectorizer_nlpimport.m', 'rb'))
-    c = dill.load(open(base_dir+"trained_pipeline_nlpimport.m", 'rb'))
+    # tfidf_vectorizer = dill.load(open(base_dir+'tfidf_vectorizer_nlpimport.m', 'rb'))
+    # c = dill.load(open(base_dir+"trained_pipeline_nlpimport.m", 'rb'))
+    tfidf_vectorizer = dill.load(open(base_dir+'tfidf_vectorizer_20nlpimport.m', 'rb'))
+    c = dill.load(open(base_dir+"trained_pipeline_20nlpimport.m", 'rb'))
 except:
     print('first import failed, trying secondary import')
     base_dir = '/Users/nknezek/Documents/Insight_local/localtype_site/localtype/data/'
-    tfidf_vectorizer = dill.load(open(base_dir + 'tfidf_vectorizer_nlpimport.m', 'rb'))
-    c = dill.load(open(base_dir + "trained_pipeline_nlpimport.m", 'rb'))
+    # tfidf_vectorizer = dill.load(open(base_dir + 'tfidf_vectorizer_nlpimport.m', 'rb'))
+    # c = dill.load(open(base_dir + "trained_pipeline_nlpimport.m", 'rb'))
+    tfidf_vectorizer = dill.load(open(base_dir+'tfidf_vectorizer_20nlpimport.m', 'rb'))
+    c = dill.load(open(base_dir+"trained_pipeline_20nlpimport.m", 'rb'))
 
 # Load the text-analysis model
 
-statetowns = ['Anchorage, AK', 'Berkeley, CA', 'Denton, TX']
+# statetowns = ['Anchorage, AK', 'Berkeley, CA', 'Denton, TX']
+_,_,statetowns = dill.load(open(base_dir+'latloncities.pk','rb'))
 explainer = LimeTextExplainer(class_names=statetowns)
 
 
@@ -65,7 +59,8 @@ def compute_all_things(input_city, input_text):
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template("index.html",)
+    dropdown_html = make_dropdown(statetowns,2)
+    return render_template("index.html",dropdown_html=dropdown_html)
 
 @app.route('/output')
 def text_output():
@@ -75,13 +70,16 @@ def text_output():
 
     dropdown_html = make_dropdown(statetowns,int(input_city))
     if input_text == '':
-        input_text = "you didn't enter any text! So instead you get to see this easter-egg! Aren't you lucky?"
-
-    try:
-        score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
-        return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
-    except:
-        return render_template("error.html", dropdown_html=dropdown_html, input_text=input_text, input_city=input_city)
+        input_text = "You didn't enter any text! So instead you get to see this easter egg! Aren't you lucky?"
+    print(input_text, input_city)
+    score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
+    return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html,
+                           color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
+    # try:
+    #     score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
+    #     return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
+    # except:
+    #     return render_template("error.html", dropdown_html=dropdown_html, input_text=input_text, input_city=input_city)
 
 @app.route('/about')
 def about():
