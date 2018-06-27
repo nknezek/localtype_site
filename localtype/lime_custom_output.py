@@ -112,9 +112,9 @@ def color_words(exp):
     html_text = '<p>'
     for i,w in enumerate(words):
         if i in pos_inds:
-            html_text += "<span style='color: #006837'>"+w+"</span>"
+            html_text += "<span style='color: #006837; font-weight:bold;'>"+w+"</span>"
         elif i in neg_inds:
-            html_text += "<span style='color: #a50026'>"+w+"</span>"
+            html_text += "<span style='color: #a50026; font-weight:bold;'>"+w+"</span>"
         else:
             html_text += w
     html_text += '</p>'

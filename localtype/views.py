@@ -33,8 +33,9 @@ except:
 
 # Load the text-analysis model
 
-statetowns = ['AK/Anchorage/', 'CA/Berkeley/', 'TX/Denton/']
+statetowns = ['Anchorage, AK', 'Berkeley, CA', 'Denton, TX']
 explainer = LimeTextExplainer(class_names=statetowns)
+
 
 def make_dropdown(towns, selected = 0):
     dropdown_html = "<select id=\"input_city\" name=\"input_city\">\n"
@@ -46,23 +47,7 @@ def make_dropdown(towns, selected = 0):
     dropdown_html += "</select>\n"
     return dropdown_html
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return render_template("index.html",
-                           title='LocalType',
-                           )
-
-@app.route('/output')
-def text_output():
-    # pull input text and city from input field and store it
-    tokenizer = RegexpTokenizer(r'[a-zA-Z]+')
-    input_city = request.args.get('input_city')
-    dropdown_html = make_dropdown(statetowns,int(input_city))
-    try:
-        input_text = request.args.get('input_text')
-    except:
-        input_text = "you didn't enter any text! So instead you get to see this easter-egg! Aren't you lucky?"
+def compute_all_things(input_city, input_text):
     exp = explainer.explain_instance(input_text, c.predict_proba, num_features=6, labels=[int(input_city)], num_samples=500)
     syndict = syn.suggest_synonyms(c,tokenizer,input_text,int(input_city))
     synhtml = syn.html_suggested_synonyms(syndict)
@@ -75,5 +60,59 @@ def text_output():
 
     top_words = lmc.plot_top_words(exp)
     # top_words = "<p>top words</p>"
-    return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
+    return score, color_text, top_words, top_cities, synhtml
+
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template("index.html",)
+
+@app.route('/output')
+def text_output():
+    # pull input text and city from input field and store it
+    input_city = request.args.get('input_city')
+    input_text = request.args.get('input_text')
+
+    dropdown_html = make_dropdown(statetowns,int(input_city))
+    if input_text == '':
+        input_text = "you didn't enter any text! So instead you get to see this easter-egg! Aren't you lucky?"
+
+    try:
+        score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
+        return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
+    except:
+        return render_template("error.html", dropdown_html=dropdown_html, input_text=input_text, input_city=input_city)
+
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+
+@app.route('/example1')
+def example1():
+    input_city = "1"
+    input_text = "Try Nick's, an honest local business with good coffee and donuts!"
+
+    dropdown_html = make_dropdown(statetowns,int(input_city))
+
+    try:
+        score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
+        return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
+    except:
+        return render_template("error.html", dropdown_html=dropdown_html, input_text=input_text, input_city=input_city)
+
+
+@app.route('/example2')
+def example2():
+    input_city = "1"
+    input_text = "Try Nick's, a conscientious co-op with artisanal coffee and organic pastries!"
+
+    dropdown_html = make_dropdown(statetowns,int(input_city))
+
+    try:
+        score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
+        return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
+    except:
+        return render_template("error.html", dropdown_html=dropdown_html, input_text=input_text, input_city=input_city)
+
 

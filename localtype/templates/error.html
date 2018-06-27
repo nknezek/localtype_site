@@ -26,7 +26,7 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/about">About</a>
@@ -37,7 +37,7 @@
 <main role="main" class="container">
     <div class="starter-template">
         <h1>Welcome to LocalType!</h1>
-        <h6>A tool to geo-target language to towns across the USA.</h6>
+        <h6>A tool to geo-target ad copy and email to towns across the USA.</h6>
     </div>
     <form action="/output" method="GET">
         <div class="row justify-content-center">
@@ -45,17 +45,13 @@
                 <div class="form-group">
                     <label for="input_text"><h2>Ad text</h2></label><br>
                     <textarea style="width:350px;height:200px;" id="input_text" name='input_text'
-                              placeholder="enter text here!"></textarea>
+                              placeholder="enter text here!">{{input_text}}</textarea>
                 </div>
             </div>
             <div class="col-sm-5">
                 <div class="form-group">
                     <label for="input_city"><h2>Choose a location</h2></label><br>
-                    <select id="input_city" name="input_city">
-                        <option value="0">Anchorage, Alaska</option>
-                        <option value="1">Berkeley, California</option>
-                        <option value="2">Denton, Texas</option>
-                    </select>
+                    {{dropdown_html|safe}}
                     {% include 'usa.html' %}
                 </div>
             </div>
@@ -66,26 +62,10 @@
             </div>
         </div>
     </form>
-    <div class="container row">
-        <h4>Or select an example</h4>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="form-group col-sm-2">
-                <form action="/example1">
-                    <button type="submit" class="btn btn-secondary btn-lg">Example 1</button>
-                </form>
-            </div>
-            <div class="form-group col-sm-2">
-                <form action="/example2">
-                    <button type="submit" class="btn btn-secondary btn-lg">Example 2</button>
-                </form>
-            </div>
-            <!--<div class="form-group col-sm-2">-->
-                <!--<form action="/example3">-->
-                    <!--<button type="submit" class="btn btn-default btn-lg">Example 3</button>-->
-                <!--</form>-->
-            <!--</div>-->
+    <div class="row justify-content-center">
+        <div class="alert alert-danger text-center" role="alert">
+            <h4>Oops, I couldn't understand your text, please change it and try again.<br> Try adding words or removing
+                special characters.</h4>
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -106,4 +86,7 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+
 
