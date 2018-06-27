@@ -19,6 +19,3 @@ def make_tfidf_vectorizer(vocab_stems, stop_stems):
 def make_pipeline(tfidf_vectorizer, classifier):
     c = Pipeline(steps=[('tfidf_vectorizer',tfidf_vectorizer), ('classifier',classifier)])
     return c
-
-def fit_tfidf_vectorizer(tfidf_vectorizer):
-    pass

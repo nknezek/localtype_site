@@ -41,21 +41,21 @@
     </div>
     <form action="/output" method="GET">
         <div class="row justify-content-center">
-            <div class="col-md-5">
+            <div class="col-lg-5">
                 <div class="form-group">
                     <label for="input_text"><h2>Ad text</h2></label><br>
                     <textarea style="width:350px;height:200px;" id="input_text" name='input_text'
                               placeholder="enter text here!">{{input_text}}</textarea>
                 </div>
             </div>
-            <div class="col-md-5">
+            <div class="col-lg-5">
                 <div class="form-group">
                     <label for="input_city"><h2>Choose a location</h2></label><br>
                     {{dropdown_html|safe}}
                     {% include 'usa.html' %}
                 </div>
             </div>
-            <div class="col-md-2 align-self-center">
+            <div class="col-lg-2 align-self-center">
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg">Analyze!</button>
                 </div>
@@ -64,7 +64,7 @@
     </form>
 
     <div class="row justify-content-around">
-        <div class="col-md-6">
+        <div class="col-lg-6">
             <h2>Overall Score: {{score|safe}}</h2>
             <h3>Text Review</h3>
             <div style="word-wrap:break-word; width:340px">
@@ -77,11 +77,11 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-lg-3">
             <h2>Influential Words</h2>
             {{top_words|safe}}
         </div>
-        <div class="col-md-3">
+        <div class="col-lg-3">
             <h2>Top Matching Cities</h2>
             {{top_cities|safe}}
         </div>
