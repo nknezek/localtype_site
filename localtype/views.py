@@ -90,29 +90,46 @@ def about():
 
 @app.route('/example1')
 def example1():
-    input_city = "1"
-    input_text = "Try Nick's, an honest local business with good coffee and donuts!"
+    input_city = "5"
+    input_text = "Try SmallCoffeeShop, a small business with great coffee and some mean bagels!"
 
     dropdown_html = make_dropdown(statetowns,int(input_city))
 
     try:
-        score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
-        return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
+        return render_template("index.html", input_text=input_text, dropdown_html=dropdown_html)
+        # score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
+        # return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
     except:
         return render_template("error.html", dropdown_html=dropdown_html, input_text=input_text, input_city=input_city)
 
 
 @app.route('/example2')
 def example2():
-    input_city = "1"
-    input_text = "Try Nick's, a conscientious co-op with artisanal coffee and organic pastries!"
+    input_city = "2"
+    input_text = "Try SmallCoffeeShop, a conscientious co-op with artisanal coffee and homemade pastries!"
 
     dropdown_html = make_dropdown(statetowns,int(input_city))
 
     try:
-        score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
-        return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
+        return render_template("index.html", input_text=input_text, dropdown_html=dropdown_html)
+        # score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
+        # return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
     except:
         return render_template("error.html", dropdown_html=dropdown_html, input_text=input_text, input_city=input_city)
 
 
+
+
+@app.route('/example3')
+def example3():
+    input_city = "2"
+    input_text = "Try SmallCoffeeShop, an honest local coffeeshop with hot coffee and sugary donuts!"
+
+    dropdown_html = make_dropdown(statetowns, int(input_city))
+
+    try:
+        return render_template("index.html", input_text=input_text, dropdown_html=dropdown_html)
+        # score, color_text, top_words, top_cities, synhtml = compute_all_things(input_city, input_text)
+        # return render_template("output.html", score=score, input_text=input_text, dropdown_html=dropdown_html, color_text=color_text, top_words=top_words, top_cities=top_cities, synonyms=synhtml)
+    except:
+        return render_template("error.html", dropdown_html=dropdown_html, input_text=input_text, input_city=input_city)

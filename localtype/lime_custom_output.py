@@ -8,19 +8,19 @@ from io import BytesIO
 
 
 def colored_score(exp, cityid):
-    low = 30
-    high = 70
+    low = 15
+    high = 30
     colors = ['#a50026', '#ffc107', '#006837']
     score = exp.predict_proba[cityid] * 100
     if score < low:
         color = colors[0]
-        text = '{:.0f}% - poor'.format(score)
+        text = '{:.0f} - poor'.format(score)
     elif score >= low and score < high:
         color = colors[1]
-        text = '{:.0f}% - acceptable'.format(score)
+        text = '{:.0f} - acceptable'.format(score)
     else:
         color = colors[2]
-        text = '{:.0f}% - great!'.format(score)
+        text = '{:.0f} - great!'.format(score)
     scoretxt = "<strong><span style='color: {}'>{}</span></strong>".format(color, text)
     return scoretxt
 
