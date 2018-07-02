@@ -36,4 +36,6 @@ def html_suggested_synonyms(syndict):
             html += ''.join([sy+', ' for sy in s[:-1]])
             html += s[-1]
             html += '</th></tr>\n'
+    if html == '':
+        html += '<p> No improvements found </p>'
     return html
