@@ -8,6 +8,9 @@ from io import BytesIO
 def logit(x,x0=10,k=.12):
     return 1/(1+np.exp(-k*(x-x0)))
 
+def exp_scale(x, x0=12):
+    return (1-np.exp(-x/x0))*100
+
 def colored_score(exp, cityid):
     # low = 15
     # high = 30
@@ -16,7 +19,8 @@ def colored_score(exp, cityid):
     high = 90
     colors = ['#a50026', '#ffc107', '#007bff', '#006837']
     # score = exp.predict_proba[cityid] * 100
-    score = np.round(logit(exp.predict_proba[cityid] * 100)*100)
+    # score = np.round(logit(exp.predict_proba[cityid] * 100)*100)
+    score = exp_scale(exp.predict_proba[cityid] * 100)
     if score < low:
         color = colors[0]
         text = '{:.0f}% - poor'.format(score)
