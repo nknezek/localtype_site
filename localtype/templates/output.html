@@ -101,9 +101,13 @@
         <div class="col-lg-4">
             <div class="card" style="width: 380px;">
                 <h4 class="card-header">Top Matching Cities</h4>
-                <table class='table table-hover'>
-                    {{top_cities|safe}}
-                </table>
+                <div class="card-body">
+                    <div style="word-wrap:break-word; width:340px">
+                        <table class='table table-hover'>
+                            {{top_cities|safe}}
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
